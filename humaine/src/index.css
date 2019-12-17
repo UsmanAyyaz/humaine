@@ -1,0 +1,66 @@
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x:hidden;
+  font-weight:lighter;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
+    monospace;
+}
+
+.sc-bdVaJa.oLPvL:hover, .sc-htpNat.gitVgn:hover {
+    background-color: red;
+}
+ul {
+    display: none;
+}
+
+
+.sc-bdVaJa.oLPvL,.sc-htpNat.gitVgn{
+width: 120px; height: 28px; margin-left: 26px; margin-top: 32px;}
+
+
+.sc-ifAKCX.ckXYIW {
+    top: 400px;
+    left: 160px;
+    width: 140px;
+    height: 100px;
+    position: absolute;
+    border-radius: 50px;
+}
+
+.sc-bZQynM.hPnXvQ {
+    top: 400px;
+    left: 340px;
+    width: 140px;
+    height: 100px;
+    position: absolute;
+    border-radius: 50px;
+}
+
+.sc-htoDjs.cEQCPD {
+    width: 254px;
+    height: 45px;
+    border-radius: 10px;
+    margin-left: 19px;
+}
+
+.sc-iwsKbI.gKWxWg {
+    width: 180px;
+    height: 44px;
+    border-radius: 10px;
+    margin-top: 15px;
+}
+
+.sc-jbKcbu.jLZENe {
+    width: 70px;
+    height: 40px;
+    margin-left: 20px;
+    margin-top: 33px;
+}
