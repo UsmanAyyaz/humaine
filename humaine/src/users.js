@@ -1,20 +1,25 @@
 
-import React, { Component } from "react";
-import styled, { css } from "styled-components";
+import React from "react";
 import EasyBtn from "./components/EasyBtn";
+import ChatBubble from 'react-chat-bubble';
 import SubmitNotesBtn from "./components/SubmitNotesBtn";
-import { render } from 'react-dom';
-import { Tabs, TabList, Tab, TabPanel } from 'react-tabs';
 import { Rect, Image, Welcome,Image2,ImageRow,Rect2, Rect2Stack,P1, Path4Row,Rect3, Rect4,  Image3,TextInput,Rect5,TextInput2,Path7Stack,Path7StackStack,Path19Stack,EnterDiagnosis,Path20Stack,Path19StackStack,Rect4Row,STabs,STabList,STab,STabPanel,ChatYou,Chatme,Rect7,P2 } from './style2.js';
 
-
-import { Route, Link } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 const User = ({ match }) => <p>{match.params.id}</p>
 class Users extends React.Component {
 
   constructor(props) {
     super(props);
     this.state = {value: '', apiResponse: ''};
+    this.state.messages =
+  [{
+        "type" : 0,
+        "text": "Hello! Good Morning!"
+    }, {
+        "type": 1,
+        "text": "Hello! Good Afternoon!"
+    }];
 
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -25,10 +30,18 @@ class Users extends React.Component {
   }
 
   handleSubmit(event) {
+    this.setState({
+      messages: this.state.messages.concat({'type':0, 'text':this.state.value})
+    })
     fetch("http://localhost:9000/testAPI/"+this.state.value)
-            .then(res => res.text())
-            .then(res => this.setState({ apiResponse: res }))
-            .catch(err => err);
+    .then(res => res.text())
+    .then(function(res){
+      console.log(res)
+      this.setState({
+        messages: this.state.messages.concat({'type':1, 'text':res})
+      })
+    }.bind(this))
+    .catch(err => err);
     this.setState({value: ""});
     event.preventDefault();
   }
@@ -619,30 +632,11 @@ class Users extends React.Component {
       <STab>Solution</STab>
 	  <STab>Discussion Board</STab>
     </STabList>
-    <STabPanel><Chatme>
-      Hello, my name is Ammar, I am one of the doctors at this hospital.
-    </Chatme>
-	<ChatYou>Hi, nice to meet you</ChatYou>
-	<Chatme>
-     What is your name?
-    </Chatme>
-	<ChatYou>I am Brian.</ChatYou>
-	<Chatme>
-     How old are you?
-    </Chatme>
-	<ChatYou>I am 52 years old.</ChatYou>
-	<Chatme>
-     How can I help you today?
-    </Chatme>
-	<ChatYou>I have been suffering from severe pain in my stomach.</ChatYou>
-	<Chatme>
-     I am sorry to hear about that
-	 </Chatme>
-	<ChatYou>That is very kind of you to say.</ChatYou>
-	<Chatme>
-    When did the pains start?
-	 </Chatme>
-	
+    
+    <STabPanel>
+      <div>
+      <ChatBubble messages = {this.state.messages} />
+      </div>
     </STabPanel>
     <STabPanel> 
 	<P2>
