@@ -7,7 +7,7 @@ function TryDemoBtn(props) {
 
   return (
     <Container  {...props}>
-      <Caption >try a demo!</Caption>
+      <Caption >Try a demo!</Caption>
     </Container>
   );
 }

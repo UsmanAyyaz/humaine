@@ -4,26 +4,83 @@ import EasyBtn from "./components/EasyBtn";
 import ChatBubble from 'react-chat-bubble';
 import SubmitNotesBtn from "./components/SubmitNotesBtn";
 import { Rect, Image, Welcome,Image2,ImageRow,Rect2, Rect2Stack,P1, Path4Row,Rect3, Rect4,  Image3,TextInput,Rect5,TextInput2,Path7Stack,Path7StackStack,Path19Stack,EnterDiagnosis,Path20Stack,Path19StackStack,Rect4Row,STabs,STabList,STab,STabPanel,ChatYou,Chatme,Rect7,P2 } from './style2.js';
-
 import { Link } from 'react-router-dom'
+import Recorder from 'react-mp3-recorder'
+
+
 const User = ({ match }) => <p>{match.params.id}</p>
 class Users extends React.Component {
 
   constructor(props) {
     super(props);
-    this.state = {value: '', apiResponse: ''};
-    this.state.messages =
-  [{
-        "type" : 0,
-        "text": "Hello! Good Morning!"
-    }, {
-        "type": 1,
-        "text": "Hello! Good Afternoon!"
-    }];
+    this.state = {
+      value: '', 
+      record: false,
+      messages: []
+    };
 
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
+
+  _onRecordingComplete = (blob) => {
+    console.log('recording', blob)
+    var file = {}
+    file.file = blob;
+    file.name = "speech.mp3";
+    file.size = blob.size;
+    file.type = "audio/mpeg";
+    const audioBytes = file.toString('base64');
+    fetch("http://localhost:9000/stt/speech", {
+          method: 'POST',
+          // headers: {
+          //   'Content-Type': "application/json; charset=utf-8"
+          // },
+          headers: { "Content-Type": "application/octet-stream" },
+          body: audioBytes
+          // body:JSON.stringify({"audio":audioBytes})
+      }).then((res) => res.json())
+      .then((data) =>  console.log(data))
+      .catch((err)=>console.log(err))
+    }
+
+    // var reader = new FileReader();
+    // reader.onload = function () {
+    //   var b64 = reader.result.replace(/^data:.+;base64,/, '');
+    //   fetch("http://localhost:9000/stt/speech", {
+    //       method: 'POST',
+    //       headers: {
+    //         'Content-Type': "application/json; charset=utf-8"
+    //       },
+    //       body:JSON.stringify({"audio":b64})
+    //   }).then((res) => res.json())
+    //   .then((data) =>  console.log(data))
+    //   .catch((err)=>console.log(err))
+    // }
+    // reader.readAsText(file);
+  // }
+
+  _onRecordingError = (err) => {
+    console.log('recording error', err)
+  }
+
+  // onStop(recordedBlob) {
+  //   console.log("Inside onStop method")
+  //   var reader = new FileReader();
+  //   reader.onload = function () {
+  //     fetch("http://localhost:9000/stt/speech", {
+  //         method: 'POST',
+  //         headers: {
+  //           'Content-Type': "application/json; charset=utf-8"
+  //         },
+  //         body:JSON.stringify({"audio":reader.result})
+  //     }).then((res) => res.json())
+  //     .then((data) =>  console.log(data))
+  //     .catch((err)=>console.log(err))
+  //   }
+
+  //   reader.readAsBinaryString(recordedBlob.blob);
+  // }
 
   handleChange(event) {
     this.setState({value: event.target.value});
@@ -33,7 +90,9 @@ class Users extends React.Component {
     this.setState({
       messages: this.state.messages.concat({'type':0, 'text':this.state.value})
     })
-    fetch("http://localhost:9000/testAPI/"+this.state.value)
+    
+    // "http://e384f1a7.ngrok.io/testAPI/"
+    fetch("http://e384f1a7.ngrok.io/testAPI/"+this.state.value)
     .then(res => res.text())
     .then(function(res){
       console.log(res)
@@ -62,7 +121,12 @@ class Users extends React.Component {
         </ImageRow>
       </Rect>
 	   {/* Row ends here */}
-	  
+     {/* <div>
+      <Recorder
+          onRecordingComplete={this._onRecordingComplete}
+          onRecordingError={this._onRecordingError}
+        />
+     </div> */}
 	   {/* Row starts here */}
        <Rect2Stack>
         <Rect2> 
@@ -201,7 +265,7 @@ class Users extends React.Component {
               style={{
                 width: 394,
                
-                marginTop: 25,
+                marginTop: 0,
                 marginLeft: 2
               }}
             >
@@ -530,10 +594,10 @@ class Users extends React.Component {
                 </svg>
                 <SubmitNotesBtn
                   style={{
-                    top: 2,
+                    top: 29,
                     left: 274,
-                    width: 60,
-                    height: 92,
+                    width: 80,
+                    height: 68,
 					zIndex:1,
                     position: "absolute"
                   }}
@@ -641,35 +705,31 @@ class Users extends React.Component {
     <STabPanel> 
 	<P2>
       Think about what organs could be associated with the specific site of the
-      pain...{"\n"}Have you tried asking about how long the episodes of pain
-      last and how frequent they are?{"\n"}What behaviour causes this
-      patient&#39;s pain to come on?{"\n"}As you progress, make a list of what
+      pain...Have you tried asking about how long the episodes of pain
+      last and how frequent they are? What behaviour causes this
+      patient&#39;s pain to come on? As you progress, make a list of what
       diagnoses it could be and exclude them one-by-one by asking the
-      appropriate closed questions{"\n"}For the best history, don&#39;t forget
+      appropriate closed questions For the best history, don&#39;t forget
       to demonstrate empathy with the patient and sign-post from one segment of
       the history to the next
     </P2>
 	</STabPanel>
     <STabPanel>
 	<P2>
-      Mr Brian Montgomery&#39;s diagnosis is biliary colic{"\n"}This can be
+      Mr Brian Montgomery&#39;s diagnosis is biliary colic. This can be
       confirmed by the right upper-quadrant pain of a colicky nature, which
-      comes on with food{"\n"}especially heavy meals, and subsides with reducing
-      oral intake{"\n"}The key to the unlocking the history is to conduct a
+      comes on with food especially heavy meals, and subsides with reducing
+      oral intake The key to the unlocking the history is to conduct a
       thorough SOCRATES questioning of the pain
     </P2>
 	</STabPanel>
 	
 	<STabPanel>
 	<P2>
-      Great case - I was thinking duodenal ulcers could have been a differential
-      {"\n"}True, but I was suspicious that this could be a retrocaecal
-      appendicitis. But the lack of fever made that less likely I suppose{"\n"}I
-      got the diagnosis correctly!! I saw a patient just like this on my
-      internship last month!{"\n"}How long did you guys take to solve this? By
-      the time I completed my history, 20 minutes had already passed 📷{"\n"}The
-      gastroenterology label got me thinking more broadly, but this seemed to be
-      a surgical case otherwise
+      Great case - I was thinking duodenal ulcers could have been a differential. True, but I was suspicious that this could be a retrocaecal
+      appendicitis. But the lack of fever made that less likely I suppose. I got the diagnosis correctly!! I saw a patient just like this on my
+      internship last month! How long did you guys take to solve this? By the time I completed my history, 20 minutes had already passed. The
+      gastroenterology label got me thinking more broadly, but this seemed to be a surgical case otherwise
     </P2>
 	</STabPanel>
   </STabs>

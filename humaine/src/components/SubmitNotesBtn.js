@@ -27,6 +27,7 @@ const Caption = styled.span`
   
   color: #fff;
   font-size: 18px;
+  font-weight: 500;
 `;
 
 export default SubmitNotesBtn;

@@ -19,24 +19,37 @@ router.get('/:message', async function(req, res, next) {
 	if (session_id == null){
 		var sessionData = await assistant.createSession({assistantId: assistant_id})
 		session_id = sessionData["result"]["session_id"]
+	}
+	try{
 		var msg = await assistant.message({assistantId: assistant_id, sessionId: session_id,
 			input: {
 				'message_type': 'text',
 				'text': userMessage
 			}
 		})
-
-		res.send(msg["result"]["output"]["generic"][0]["text"])
+		if (msg["result"]["output"]["generic"].length==0){
+			res.send("I don't know how to answer that question, please elaborate.")
+		}
+		else{
+			res.send(msg["result"]["output"]["generic"][0]["text"])
+		}
 	}
 
-	else{
+	catch(e){
+		var sessionData = await assistant.createSession({assistantId: assistant_id})
+		session_id = sessionData["result"]["session_id"]
 		var msg = await assistant.message({assistantId: assistant_id, sessionId: session_id,
 			input: {
 				'message_type': 'text',
 				'text': userMessage
 			}
 		})
-		res.send(msg["result"]["output"]["generic"][0]["text"])
+		if (msg["result"]["output"]["generic"].length==0){
+			res.send("I don't know how to answer that question, please elaborate.")
+		}
+		else{
+			res.send(msg["result"]["output"]["generic"][0]["text"])
+		}
 	}
 });
 

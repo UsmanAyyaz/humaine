@@ -4,13 +4,17 @@
   "private": true,
   "dependencies": {
     "@material-ui/core": "^4.2.1",
+    "blob-to-base64": "^1.0.2",
     "material-ui-slider": "^3.0.8",
+    "mic": "^2.1.2",
     "pure-react-carousel": "^1.21.1",
     "react": "^16.12.0",
     "react-chat-bubble": "^0.8.7",
     "react-dom": "^16.12.0",
     "react-icons": "^3.8.0",
     "react-list": "^0.8.11",
+    "react-mic": "^12.4.1",
+    "react-mp3-recorder": "^1.1.2",
     "react-native": "^0.61.5",
     "react-native-vector-icons": "^6.6.0",
     "react-native-web": "^0.11.7",
@@ -18,7 +22,8 @@
     "react-scripts": "^3.3.0",
     "react-splitter-layout": "^4.0.0",
     "react-tabs": "^3.0.0",
-    "styled-components": "^4.3.2"
+    "styled-components": "^4.3.2",
+    "wav": "^1.0.2"
   },
   "scripts": {
     "start": "react-scripts start",

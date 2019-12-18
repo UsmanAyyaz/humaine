@@ -164,7 +164,7 @@ export const TextInput2 = styled.textarea`
   font-weight: regular;
   font-style: italic;
   line-height: 25px;
-  text-align: center;
+  text-align: left;
   border: none;
   background: transparent;
 `;
@@ -193,10 +193,10 @@ export const Path19Stack = styled.div`
 
 export const EnterDiagnosis = styled.input`
   
-  top: 0px;
+  top: 25px;
   left: 13px;
   width: 247px;
-  height: 86px;
+  height: 66px;
   color: #121212;
   position: absolute;
   border-radius: 10px;
@@ -246,7 +246,7 @@ export const STabs = styled(Tabs)`
 
 export const STabList = styled(TabList)`
   list-style-type: none;
-  padding: 4px;
+  padding: 10px;
   display: flex;
   margin: 0;
 `;
@@ -254,7 +254,7 @@ STabList.tabsRole = 'TabList';
 
 export const STab = styled(Tab)`
   margin-right: 4px;
-  
+  font-weight: 500;
   padding: 10px 40px;
   user-select: none;
   cursor: arrow;
@@ -317,11 +317,11 @@ export const Rect7 = styled.div`
 
 export const P2 = styled.span`
   
-  color: #0330a2;
+  color: black;
   font-weight: 400;
   font-style: normal;
   white-space:pre-wrap;
-  font-size:22px;
+  font-size:18px;
   line-height:27px;
   
 `;
